@@ -10,7 +10,7 @@ module.exports = {
         colors: true
     },
     entry: {
-        main: './src/main.js'
+        main: './app/main.js'
         //vendors: ['react','jquery']
     },
     output: {

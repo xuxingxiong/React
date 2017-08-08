@@ -1,5 +1,11 @@
 'use strict';
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var defaultProps = {
     className: '',
     accessibility: true,
@@ -10,6 +16,13 @@ var defaultProps = {
     centerMode: false,
     centerPadding: '50px',
     cssEase: 'ease',
+    customPaging: function customPaging(i) {
+        return _react2.default.createElement(
+            'button',
+            null,
+            i + 1
+        );
+    },
     dots: false,
     dotsClass: 'slick-dots',
     draggable: true,

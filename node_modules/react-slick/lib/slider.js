@@ -1,5 +1,7 @@
 'use strict';
 
+exports.__esModule = true;
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _react = require('react');
@@ -16,31 +18,51 @@ var _json2mq = require('json2mq');
 
 var _json2mq2 = _interopRequireDefault(_json2mq);
 
-var _reactResponsiveMixin = require('react-responsive-mixin');
-
-var _reactResponsiveMixin2 = _interopRequireDefault(_reactResponsiveMixin);
-
 var _defaultProps = require('./default-props');
 
 var _defaultProps2 = _interopRequireDefault(_defaultProps);
 
+var _canUseDom = require('can-use-dom');
+
+var _canUseDom2 = _interopRequireDefault(_canUseDom);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Slider = _react2.default.createClass({
-  displayName: 'Slider',
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  mixins: [_reactResponsiveMixin2.default],
-  innerSlider: null,
-  innerSliderRefHandler: function innerSliderRefHandler(ref) {
-    this.innerSlider = ref;
-  },
-  getInitialState: function getInitialState() {
-    return {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var enquire = _canUseDom2.default && require('enquire.js');
+
+var Slider = function (_React$Component) {
+  _inherits(Slider, _React$Component);
+
+  function Slider(props) {
+    _classCallCheck(this, Slider);
+
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    _this.state = {
       breakpoint: null
     };
-  },
-  componentWillMount: function componentWillMount() {
-    var _this = this;
+    _this._responsiveMediaHandlers = [];
+    _this.innerSliderRefHandler = _this.innerSliderRefHandler.bind(_this);
+    return _this;
+  }
+
+  Slider.prototype.innerSliderRefHandler = function innerSliderRefHandler(ref) {
+    this.innerSlider = ref;
+  };
+
+  Slider.prototype.media = function media(query, handler) {
+    enquire.register(query, handler);
+    this._responsiveMediaHandlers.push({ query: query, handler: handler });
+  };
+
+  Slider.prototype.componentWillMount = function componentWillMount() {
+    var _this2 = this;
 
     if (this.props.responsive) {
       var breakpoints = this.props.responsive.map(function (breakpt) {
@@ -57,40 +79,46 @@ var Slider = _react2.default.createClass({
         } else {
           bQuery = (0, _json2mq2.default)({ minWidth: breakpoints[index - 1], maxWidth: breakpoint });
         }
-        _this.media(bQuery, function () {
-          _this.setState({ breakpoint: breakpoint });
+        _canUseDom2.default && _this2.media(bQuery, function () {
+          _this2.setState({ breakpoint: breakpoint });
         });
       });
 
       // Register media query for full screen. Need to support resize from small to large
       var query = (0, _json2mq2.default)({ minWidth: breakpoints.slice(-1)[0] });
 
-      this.media(query, function () {
-        _this.setState({ breakpoint: null });
+      _canUseDom2.default && this.media(query, function () {
+        _this2.setState({ breakpoint: null });
       });
     }
-  },
+  };
 
-  slickPrev: function slickPrev() {
+  Slider.prototype.componentWillUnmount = function componentWillUnmount() {
+    this._responsiveMediaHandlers.forEach(function (obj) {
+      enquire.unregister(obj.query, obj.handler);
+    });
+  };
+
+  Slider.prototype.slickPrev = function slickPrev() {
     this.innerSlider.slickPrev();
-  },
+  };
 
-  slickNext: function slickNext() {
+  Slider.prototype.slickNext = function slickNext() {
     this.innerSlider.slickNext();
-  },
+  };
 
-  slickGoTo: function slickGoTo(slide) {
+  Slider.prototype.slickGoTo = function slickGoTo(slide) {
     this.innerSlider.slickGoTo(slide);
-  },
+  };
 
-  render: function render() {
-    var _this2 = this;
+  Slider.prototype.render = function render() {
+    var _this3 = this;
 
     var settings;
     var newProps;
     if (this.state.breakpoint) {
       newProps = this.props.responsive.filter(function (resp) {
-        return resp.breakpoint === _this2.state.breakpoint;
+        return resp.breakpoint === _this3.state.breakpoint;
       });
       settings = newProps[0].settings === 'unslick' ? 'unslick' : (0, _objectAssign2.default)({}, this.props, newProps[0].settings);
     } else {
@@ -121,7 +149,9 @@ var Slider = _react2.default.createClass({
         children
       );
     }
-  }
-});
+  };
 
-module.exports = Slider;
+  return Slider;
+}(_react2.default.Component);
+
+exports.default = Slider;
