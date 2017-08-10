@@ -4,7 +4,7 @@ import { Table, Icon } from 'antd'
 // 引入标准Fetch及IE兼容依赖
 import 'whatwg-fetch'
 
-export default class MyTable extends React.Component {
+export default class UserList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {

@@ -10,7 +10,7 @@ module.exports = {
         colors: true
     },
     entry: {
-        main: './app/main.js'
+        main: './src/main.js'
         //vendors: ['react','jquery']
     },
     output: {
@@ -23,7 +23,7 @@ module.exports = {
             {
                 // edit this for additional asset file types
                 test: /\.(png|jpg|gif)$/, 
-                loader: 'url-loader?limit=819200'
+                loader: 'url-loader?limit=10000'
             },
             {
                 test: /\.js$/,

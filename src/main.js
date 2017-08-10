@@ -18,7 +18,8 @@ import 'font-awesome/css/font-awesome.min.css'
 import './main.css'
 
 // 引入单个页面（包括嵌套的子页面）
-import MyTable from './src/table.js'
+import UserList from './app/usermanage/userlist.js'
+import RoleList from './app/rolemanage/rolelist.js'
 
 const SubMenu = Menu.SubMenu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -29,7 +30,7 @@ class LayoutApp extends React.Component {
         super(props)
         this.state = {
             breadcrumbCount: [],
-            breadcrumb: '用户管理/表格',
+            breadcrumb: '系统管理/用户管理',
             username: ''
         }
     }
@@ -97,10 +98,10 @@ class LayoutApp extends React.Component {
                             onClick={this.handleClick.bind(this)}
                             style={{ height: '100%', borderRight: 0 }}
                             >
-                            <SubMenu key="UserManage" title={<span><Icon type="user" />用户管理</span>}>
-                                <Menu.Item key="100"><Link to="/">表格</Link></Menu.Item>
-                                <Menu.Item key="101">option2</Menu.Item>
-                                <Menu.Item key="102">option3</Menu.Item>
+                            <SubMenu key="UserManage" title={<span><Icon type="user" />系统管理</span>}>
+                                <Menu.Item key="100"><Link to="/userList">用户管理</Link></Menu.Item>
+                                <Menu.Item key="101"><Link to="/roleList">角色管理</Link></Menu.Item>
+                                <Menu.Item key="102">权限管理</Menu.Item>
                                 <Menu.Item key="103">option4</Menu.Item>
                             </SubMenu>
                             <SubMenu key="sub2" title={<span><Icon type="laptop" />subnav 2</span>}>
@@ -116,7 +117,8 @@ class LayoutApp extends React.Component {
                                 <Breadcrumb.Item>{this.state.breadcrumb}</Breadcrumb.Item>
                             </Breadcrumb>
                             <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 500 }}>
-                                <Route exact path="/" component={MyTable} />
+                                <Route exact path="/userList" component={UserList} />
+                                <Route path="/roleList" component={RoleList} />
                             </Content>
                         </Layout>
                     </Layout>
