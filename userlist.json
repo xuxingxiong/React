@@ -1,0 +1,16 @@
+{
+    "userList": [
+        {"username":"100","name" : "zhangsan","state":1},
+        {"username":"101","name" : "zhangsan","state":1},
+        {"username":"102","name" : "zhangsan","state":1},
+        {"username":"103","name" : "zhangsan","state":1},
+        {"username":"104","name" : "zhangsan","state":1},
+        {"username":"105","name" : "zhangsan","state":1},
+        {"username":"106","name" : "zhangsan","state":1},
+        {"username":"107","name" : "zhangsan","state":1},
+        {"username":"108","name" : "zhangsan","state":1},
+        {"username":"109","name" : "zhangsan","state":1},
+        {"username":"110","name" : "zhangsan","state":1},
+        {"username":"111","name" : "zhangsan","state":1}
+    ]
+}

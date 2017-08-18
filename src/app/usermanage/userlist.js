@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Icon } from 'antd'
+import {Button, Table, Icon } from 'antd'
 
 // 引入标准Fetch及IE兼容依赖
 import 'whatwg-fetch'
@@ -15,21 +15,18 @@ export default class UserList extends React.Component {
 
     // 获取数据
     getUserList = () => {
-        fetch('http://127.0.0.1:8080/userInfo/userList', {
-                method: 'POST',
-                mode: 'cors',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                //body: JSON.stringify(postData)
-            })
+        fetch('../../../userlist.json')
             .then((res) => { console.log(res.status); return res.json() })
             .then((data) => { 
                 console.log(data.userList);
+
                 this.setState({ userList: data.userList }) }
             )
             .catch((e) => { console.log(e.message) })
+    }
+
+    deleteClick = (data) => {
+        console.log(data);
     }
 
     componentDidMount() {
@@ -54,11 +51,13 @@ export default class UserList extends React.Component {
         }, {
             title: '状态',
             width: '20%',
+            render: state => {return state==1?'有效':'无效'},
             dataIndex: 'state',
         }, {
             title: '操作',
             width: '20%',
-            dataIndex: 'operate'
+            dataIndex: 'operate',
+            render: (text,data,index) =>  <Button onClick={this.deleteClick.bind(this,data)}>删除</Button>
         }]
 
         const { selectedRowKeys } = this.state
